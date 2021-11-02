@@ -14,7 +14,7 @@ features i plan on implementing later:
 
 food checking to make sure it doesn't respawn on the snake
 
-highscore file which it's location cna be configured in config.h
+highscore file which it's location can be configured in config.h
 
 optionally multiple food pieces on the map
 
