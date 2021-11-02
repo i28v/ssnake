@@ -1,5 +1,7 @@
 simple snake game for the linux terminal that i made because every other snake game on github wasn't that good
 
+use vim hjkl to move
+
 settings are configured in config.h
 
 if config.h does not exist yet, make will automaticlaly copy it from config.def.h
