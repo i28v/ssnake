@@ -11,6 +11,7 @@ void game_draw();
 
 static char board[BOARD_HEIGHT][BOARD_WIDTH];
 static int running;
+static int paused;
 static int snake_body_x[SNAKE_MAX_LENGTH], snake_body_y[SNAKE_MAX_LENGTH];
 static int snake_length;
 static char snake_direction;
@@ -49,19 +50,23 @@ void game_input()
             switch(ch)
             {
             case DIRECTION_UP:
-                if(snake_direction != DIRECTION_DOWN) snake_direction = ch;
+                if(snake_direction != DIRECTION_DOWN && !paused) snake_direction = ch;
                 break;
             case DIRECTION_DOWN:
-                if(snake_direction != DIRECTION_UP) snake_direction = ch;
+                if(snake_direction != DIRECTION_UP && !paused) snake_direction = ch;
                 break;
             case DIRECTION_LEFT:
-                if(snake_direction != DIRECTION_RIGHT) snake_direction = ch;
+                if(snake_direction != DIRECTION_RIGHT && !paused) snake_direction = ch;
                 break;
             case DIRECTION_RIGHT:
-                if(snake_direction != DIRECTION_LEFT) snake_direction = ch;
+                if(snake_direction != DIRECTION_LEFT && !paused) snake_direction = ch;
                 break;
-            case 'g':
+            case DEBUG_INCREASE_SNAKE_LENGTH_KEY:
                 if(debug) snake_length++;
+                break;
+            case PAUSE_KEY:
+                paused ^= 1;
+                break;
             default:
                 break;
             }
@@ -198,7 +203,7 @@ int main(void)
     do
     {
         game_input();
-        game_update();
+        if(!paused) game_update();
         game_draw();
         if(running) usleep(game_speed);
     } while(running);
