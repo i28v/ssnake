@@ -150,7 +150,22 @@ void game_draw()
         board[i][0] = board_vertical_char;
         board[i][BOARD_WIDTH-1] = board_vertical_char;
     }
-    board[snake_body_y[0]][snake_body_x[0]] = snake_head_char;
+    switch(snake_direction)
+    {
+    case DIRECTION_UP:
+        board[snake_body_y[0]][snake_body_x[0]] = snake_head_up_char;
+        break;
+    case DIRECTION_DOWN:
+        board[snake_body_y[0]][snake_body_x[0]] = snake_head_down_char;
+        break;
+    case DIRECTION_LEFT:
+        board[snake_body_y[0]][snake_body_x[0]] = snake_head_left_char;
+        break;
+    case DIRECTION_RIGHT:
+        board[snake_body_y[0]][snake_body_x[0]] = snake_head_right_char;
+    default:
+        break;
+    }
     for(int i = 1; i < snake_length; i++)
     {
         board[snake_body_y[i]][snake_body_x[i]] = snake_tail_char;
@@ -161,12 +176,18 @@ void game_draw()
     {
         for(int i = 0; i < BOARD_WIDTH; i++)
         {
-            printf("%c", board[j][i]);
+            if(board[j][i] == snake_head_up_char || board[j][i] == snake_head_down_char || board[j][i] == snake_head_left_char || board[j][i] == snake_head_right_char) printf("%s%c", SNAKE_HEAD_CHAR_COLOR, board[j][i]);
+            else if(board[j][i] == snake_tail_char) printf("%s%c", SNAKE_TAIL_CHAR_COLOR, board[j][i]);
+            else if(board[j][i] == food_char) printf("%s%c", FOOD_CHAR_COLOR, board[j][i]);
+            else if(board[j][i] == board_corner_char) printf("%s%c", BOARD_CORNER_CHAR_COLOR, board[j][i]);
+            else if(board[j][i] == board_vertical_char) printf("%s%c", BOARD_VERTICAL_CHAR_COLOR, board[j][i]);
+            else if(board[j][i] == board_horizontal_char) printf("%s%c", BOARD_HORIZONTAL_CHAR_COLOR, board[j][i]);
+			else printf("%s%c", DEFAULT_CHAR_COLOR, board[j][i]);
         }
         printf("\n");
     }
     printf("\n");
-    printf("Score: %d\n\n\n\n", score);
+    printf("%sScore: %d\n\n\n\n", DEFAULT_CHAR_COLOR, score);
 }
 
 int main(void)
