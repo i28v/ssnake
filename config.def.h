@@ -6,7 +6,6 @@
 
 #define FOOD_COUNT 1
 
-
 static const int debug = 0;
 static const int game_speed = 100000;
 
