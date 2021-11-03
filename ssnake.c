@@ -182,7 +182,7 @@ void game_draw()
             else if(board[j][i] == board_corner_char) printf("%s%c", BOARD_CORNER_CHAR_COLOR, board[j][i]);
             else if(board[j][i] == board_vertical_char) printf("%s%c", BOARD_VERTICAL_CHAR_COLOR, board[j][i]);
             else if(board[j][i] == board_horizontal_char) printf("%s%c", BOARD_HORIZONTAL_CHAR_COLOR, board[j][i]);
-			else printf("%s%c", DEFAULT_CHAR_COLOR, board[j][i]);
+            else printf("%s%c", DEFAULT_CHAR_COLOR, board[j][i]);
         }
         printf("\n");
     }
