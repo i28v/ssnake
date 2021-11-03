@@ -6,6 +6,7 @@
 
 #define FOOD_COUNT 1
 
+
 static const int debug = 0;
 static const int game_speed = 100000;
 
@@ -57,6 +58,10 @@ static const char* color_white = "\033[37m";
 #define DIRECTION_DOWN 'j'
 #define DIRECTION_LEFT 'h'
 #define DIRECTION_RIGHT 'l'
+
+#define DEBUG_INCREASE_SNAKE_LENGTH_KEY 'g'
+
+#define PAUSE_KEY 'p'
 
 #define SNAKE_STARTING_DIRECTION DIRECTION_RIGHT
 
