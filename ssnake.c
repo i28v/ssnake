@@ -25,7 +25,7 @@ void initialize_game()
     score = 0;
     snake_direction = SNAKE_STARTING_DIRECTION;
     snake_length = snake_starting_length;
-    for(int i = 0; i < snake_length; i++)
+    for (int i = 0; i < snake_length; i++)
     {
         snake_body_x[i] = snake_starting_pos_x - i;
         snake_body_y[i] = snake_starting_pos_y;
@@ -41,28 +41,31 @@ void finalize_game()
 
 void game_input()
 {
-    if(kbhit())
+    if (kbhit())
     {
         char ch = getchar();
-        if(ch == 'q') running = 0;
+        if (ch == 'q')
+        {
+            running = 0;
+        }
         else
         {
-            switch(ch)
+            switch (ch)
             {
             case DIRECTION_UP:
-                if(snake_direction != DIRECTION_DOWN && !paused) snake_direction = ch;
+                if (snake_direction != DIRECTION_DOWN && !paused) snake_direction = ch;
                 break;
             case DIRECTION_DOWN:
-                if(snake_direction != DIRECTION_UP && !paused) snake_direction = ch;
+                if (snake_direction != DIRECTION_UP && !paused) snake_direction = ch;
                 break;
             case DIRECTION_LEFT:
-                if(snake_direction != DIRECTION_RIGHT && !paused) snake_direction = ch;
+                if (snake_direction != DIRECTION_RIGHT && !paused) snake_direction = ch;
                 break;
             case DIRECTION_RIGHT:
-                if(snake_direction != DIRECTION_LEFT && !paused) snake_direction = ch;
+                if (snake_direction != DIRECTION_LEFT && !paused) snake_direction = ch;
                 break;
             case DEBUG_INCREASE_SNAKE_LENGTH_KEY:
-                if(debug) snake_length++;
+                if (debug) snake_length++;
                 break;
             case PAUSE_KEY:
                 paused ^= 1;
@@ -76,12 +79,12 @@ void game_input()
 
 void game_update()
 {
-    for(int i = snake_length; i > 0; i--)
+    for (int i = snake_length; i > 0; i--)
     {
         snake_body_x[i] = snake_body_x[i-1];
         snake_body_y[i] = snake_body_y[i-1];
     }
-    switch(snake_direction)
+    switch (snake_direction)
     {
     case DIRECTION_UP:
         snake_body_y[0]--;
@@ -97,65 +100,72 @@ void game_update()
     default:
         break;
     }
-    if((snake_body_x[0] == food_x) && (snake_body_y[0] == food_y))
+    for (int i = 1; i < snake_length; i++)
+    {
+        if ((snake_body_x[0] == snake_body_x[i]) && (snake_body_y[0] == snake_body_y[i]))
+        {
+            running = 0;
+        }
+    }
+    switch (snake_body_x[0])
+    {
+    case 0:
+        if (wrap) snake_body_x[0] = BOARD_WIDTH - 2;
+        else running = 0;
+        break;
+    case (BOARD_WIDTH - 1):
+        if (wrap) snake_body_x[0] = 1;
+        else running = 0;
+    default:
+        break;
+    }
+    switch (snake_body_y[0])
+    {
+    case 0:
+        if (wrap) snake_body_y[0] = BOARD_HEIGHT - 2;
+        else running = 0;
+        break;
+
+    case (BOARD_HEIGHT - 1):
+        if (wrap) snake_body_y[0] = 1;
+        else running = 0;
+
+    default:
+        break;
+    }
+    if ((snake_body_x[0] == food_x) && (snake_body_y[0] == food_y))
     {
         score += food_score_increment;
         snake_length += food_snake_length_increment;
         food_x = randnum(1, BOARD_WIDTH - 2);
         food_y = randnum(1, BOARD_HEIGHT - 2);
     }
-    for(int i = 1; i < snake_length; i++)
-    {
-        if((snake_body_x[0] == snake_body_x[i]) && (snake_body_y[0] == snake_body_y[i]))
-        {
-            running = 0;
-        }
-    }
-    switch(snake_body_x[0])
-    {
-    case 0:
-        if(wrap) snake_body_x[0] = BOARD_WIDTH - 2;
-        else running = 0;
-        break;
-    case (BOARD_WIDTH - 1):
-        if(wrap) snake_body_x[0] = 1;
-        else running = 0;
-    default:
-        break;
-    }
-    switch(snake_body_y[0])
-    {
-    case 0:
-        if(wrap) snake_body_y[0] = BOARD_HEIGHT - 2;
-        else running = 0;
-        break;
-    case (BOARD_HEIGHT - 1):
-        if(wrap) snake_body_y[0] = 1;
-        else running = 0;
-    default:
-        break;
-    }
-
 }
 
 void game_draw()
 {
-    for(int j = 0; j < BOARD_HEIGHT; j++) for(int i = 0; i < BOARD_WIDTH; i++) board[j][i] = board_blank_char;
+    for (int j = 0; j < BOARD_HEIGHT; j++)
+    {
+        for (int i = 0; i < BOARD_WIDTH; i++)
+        {
+            board[j][i] = board_blank_char;
+        }
+    }
     board[0][0] = board_corner_char;
     board[0][BOARD_WIDTH-1] = board_corner_char;
     board[BOARD_HEIGHT-1][BOARD_WIDTH-1] = board_corner_char;
     board[BOARD_HEIGHT-1][0] = board_corner_char;
-    for(int i = 1; i < BOARD_WIDTH-1; i++)
+    for (int i = 1; i < BOARD_WIDTH-1; i++)
     {
         board[0][i] = board_horizontal_char;
         board[BOARD_HEIGHT-1][i] = board_horizontal_char;
     }
-    for(int i = 1; i < BOARD_HEIGHT-1; i++)
+    for (int i = 1; i < BOARD_HEIGHT-1; i++)
     {
         board[i][0] = board_vertical_char;
         board[i][BOARD_WIDTH-1] = board_vertical_char;
     }
-    switch(snake_direction)
+    switch (snake_direction)
     {
     case DIRECTION_UP:
         board[snake_body_y[0]][snake_body_x[0]] = snake_head_up_char;
@@ -171,23 +181,44 @@ void game_draw()
     default:
         break;
     }
-    for(int i = 1; i < snake_length; i++)
+    for (int i = 1; i < snake_length; i++)
     {
         board[snake_body_y[i]][snake_body_x[i]] = snake_tail_char;
     }
     board[food_y][food_x] = food_char;
     RESET_CURSOR_POSITION();
-    for(int j = 0; j < BOARD_HEIGHT; j++)
+    for (int j = 0; j < BOARD_HEIGHT; j++)
     {
-        for(int i = 0; i < BOARD_WIDTH; i++)
+        for (int i = 0; i < BOARD_WIDTH; i++)
         {
-            if(board[j][i] == snake_head_up_char || board[j][i] == snake_head_down_char || board[j][i] == snake_head_left_char || board[j][i] == snake_head_right_char) printf("%s%c", SNAKE_HEAD_CHAR_COLOR, board[j][i]);
-            else if(board[j][i] == snake_tail_char) printf("%s%c", SNAKE_TAIL_CHAR_COLOR, board[j][i]);
-            else if(board[j][i] == food_char) printf("%s%c", FOOD_CHAR_COLOR, board[j][i]);
-            else if(board[j][i] == board_corner_char) printf("%s%c", BOARD_CORNER_CHAR_COLOR, board[j][i]);
-            else if(board[j][i] == board_vertical_char) printf("%s%c", BOARD_VERTICAL_CHAR_COLOR, board[j][i]);
-            else if(board[j][i] == board_horizontal_char) printf("%s%c", BOARD_HORIZONTAL_CHAR_COLOR, board[j][i]);
-            else printf("%s%c", DEFAULT_CHAR_COLOR, board[j][i]);
+            if (board[j][i] == snake_head_up_char || board[j][i] == snake_head_down_char || board[j][i] == snake_head_left_char || board[j][i] == snake_head_right_char)
+            {
+                printf("%s%c", SNAKE_HEAD_CHAR_COLOR, board[j][i]);
+            }
+            else if (board[j][i] == snake_tail_char)
+            {
+                printf("%s%c", SNAKE_TAIL_CHAR_COLOR, board[j][i]);
+            }
+            else if (board[j][i] == food_char)
+            {
+                printf("%s%c", FOOD_CHAR_COLOR, board[j][i]);
+            }
+            else if (board[j][i] == board_corner_char)
+            {
+                printf("%s%c", BOARD_CORNER_CHAR_COLOR, board[j][i]);
+            }
+            else if (board[j][i] == board_vertical_char)
+            {
+                printf("%s%c", BOARD_VERTICAL_CHAR_COLOR, board[j][i]);
+            }
+            else if (board[j][i] == board_horizontal_char)
+            {
+                printf("%s%c", BOARD_HORIZONTAL_CHAR_COLOR, board[j][i]);
+            }
+            else
+            {
+                printf("%s%c", DEFAULT_CHAR_COLOR, board[j][i]);
+            }
         }
         printf("\n");
     }
@@ -203,10 +234,10 @@ int main(void)
     do
     {
         game_input();
-        if(!paused) game_update();
+        if (!paused) game_update();
         game_draw();
-        if(running) usleep(game_speed);
-    } while(running);
+        if (running) usleep(game_speed);
+    } while (running);
     finalize_game();
     finalize_terminal();
     return 0;
