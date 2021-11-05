@@ -25,7 +25,7 @@ void finalize_terminal()
 int kbhit()
 {
     char ch = getchar();
-    if(ch != EOF)
+    if (ch != EOF)
     {
         ungetc(ch, stdin);
         return 1;
