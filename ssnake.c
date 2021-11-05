@@ -53,19 +53,34 @@ void game_input()
             switch (ch)
             {
             case DIRECTION_UP:
-                if (snake_direction != DIRECTION_DOWN && !paused) snake_direction = ch;
+                if (snake_direction != DIRECTION_DOWN && !paused)
+                {
+                    snake_direction = ch;
+                }
                 break;
             case DIRECTION_DOWN:
-                if (snake_direction != DIRECTION_UP && !paused) snake_direction = ch;
+                if (snake_direction != DIRECTION_UP && !paused)
+                {
+                    snake_direction = ch;
+                }
                 break;
             case DIRECTION_LEFT:
-                if (snake_direction != DIRECTION_RIGHT && !paused) snake_direction = ch;
+                if (snake_direction != DIRECTION_RIGHT && !paused)
+                {
+                    snake_direction = ch;
+                }
                 break;
             case DIRECTION_RIGHT:
-                if (snake_direction != DIRECTION_LEFT && !paused) snake_direction = ch;
+                if (snake_direction != DIRECTION_LEFT && !paused)
+                {
+                    snake_direction = ch;
+                }
                 break;
             case DEBUG_INCREASE_SNAKE_LENGTH_KEY:
-                if (debug) snake_length++;
+                if (debug)
+                {
+                    snake_length++;
+                }
                 break;
             case PAUSE_KEY:
                 paused ^= 1;
@@ -110,11 +125,20 @@ void game_update()
     switch (snake_body_x[0])
     {
     case 0:
-        if (wrap) snake_body_x[0] = BOARD_WIDTH - 2;
-        else running = 0;
+        if (wrap)
+        {
+            snake_body_x[0] = BOARD_WIDTH - 2;
+        }
+        else
+        {
+            running = 0;
+        }
         break;
     case (BOARD_WIDTH - 1):
-        if (wrap) snake_body_x[0] = 1;
+        if (wrap)
+        {
+            snake_body_x[0] = 1;
+        }
         else running = 0;
     default:
         break;
@@ -122,14 +146,18 @@ void game_update()
     switch (snake_body_y[0])
     {
     case 0:
-        if (wrap) snake_body_y[0] = BOARD_HEIGHT - 2;
+        if (wrap)
+        {
+            snake_body_y[0] = BOARD_HEIGHT - 2;
+        }
         else running = 0;
         break;
-
     case (BOARD_HEIGHT - 1):
-        if (wrap) snake_body_y[0] = 1;
+        if (wrap)
+        {
+            snake_body_y[0] = 1;
+        }
         else running = 0;
-
     default:
         break;
     }
