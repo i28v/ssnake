@@ -17,10 +17,10 @@ config.h:
 	fi
 
 install:
-	install -m 755 snake $(INSTALL_PREFIX)/bin
+	install -m 755 $(OUT) $(INSTALL_PREFIX)/bin
 
 uninstall:
-	rm $(INSTALL_PREFIX)/bin/snake
+	rm $(INSTALL_PREFIX)/bin/$(OUT)
 
 clean:
 	rm $(OUT) $(OBJ)
