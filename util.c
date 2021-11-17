@@ -1,5 +1,12 @@
 #include "util.h"
 
+#include <termios.h>
+#include <fcntl.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <unistd.h>
+
 void initialize_terminal()
 {
     struct termios terminal_interface;
