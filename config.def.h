@@ -1,3 +1,6 @@
+#ifndef CONFIG_H
+#define CONFIG_H
+
 #define BOARD_WIDTH 32
 #define BOARD_HEIGHT 16
 
@@ -61,3 +64,5 @@ static const char* color_white = "\033[37m";
 #define PAUSE_KEY 'p'
 
 #define SNAKE_STARTING_DIRECTION DIRECTION_RIGHT
+
+#endif /* CONFIG_H */
