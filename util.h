@@ -1,8 +1,3 @@
-#ifndef UTIL_H
-#define UTIL_H
-
-#include "config.h"
-
 #define CLEAR_SCREEN() printf("\033[2J")
 
 #define RESET_CURSOR_POSITION() printf("\033[0;0H")
@@ -23,5 +18,3 @@ void initialize_terminal();
 void finalize_terminal();
 int kbhit();
 int randnum(int min, int max);
-
-#endif /* UTIL_H */

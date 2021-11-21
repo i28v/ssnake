@@ -5,7 +5,6 @@
 #include <stdlib.h>
 #include <time.h>
 #include <unistd.h>
-
 #define SNAKE_MAX_LENGTH ((BOARD_WIDTH - 2) * (BOARD_HEIGHT - 2))
 
 void initialize_game();
